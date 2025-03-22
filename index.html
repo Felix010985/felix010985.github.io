@@ -6,7 +6,7 @@
     <title>FelixProfi</title>
     <style>
         body {
-            background-color: #87CEFA;
+            background-color: #87CEFA; /* Голубой цвет фона */
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
@@ -16,11 +16,47 @@
         h1 {
             margin-top: 20%;
             font-size: 50px;
+            color: #333; /* Темный цвет для текста */
+            opacity: 1;
+            transition: margin-top 1s ease, opacity 2s ease;
+        }
+
+        .download-message {
+            font-size: 24px;
             color: #333;
+            opacity: 0;
+            margin-top: 30px;
+            transition: opacity 2s ease-in-out;
+        }
+
+        a {
+            color: #0066cc;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>FelixProfi</h1>
+    <h1 id="title">FelixProfi</h1>
+    <div id="download-message" class="download-message">
+        Скачивание <strong>MazukiOS</strong> <br>
+        <a href="MazukiOS/main.exe" target="_blank">Скачать MazukiOS</a>
+    </div>
+
+    <script>
+        // Поднимем заголовок вверх и покажем сообщение
+        window.onload = function() {
+            const title = document.getElementById("title");
+            const downloadMessage = document.getElementById("download-message");
+
+            // Заголовок поднимется
+            title.style.marginTop = "0";
+
+            // Появляется сообщение через 1.5 секунды
+            setTimeout(() => {
+                downloadMessage.style.opacity = "1";
+            }, 1500);
+        };
+    </script>
 </body>
 </html>
