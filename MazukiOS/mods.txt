@@ -8,20 +8,4 @@ print("This is another mod!")
 
 $rofls
 ---
-while True:
-    roflyatina = input(f"penis$mazuki: ").strip()
-    if not roflyatina:
-        continue
-    if roflyatina == "p nice":
-        print("P NICE SPEAR MINT!")
-    elif roflyatina == "spear mint":
-        print("ДОЛБАЕБ ТЫ ЗАСПЕРМИЛ СИСТЕМУ!")
-    elif roflyatina == "bydish":
-        print("БЫДЫЩ")
-    elif roflyatina == "meow":
-        print("Meow! 😺")
-    elif roflyatina == "options":
-        print("лол тут нихуя нет")
-    elif roflyatina == "settings":
-        print("хахахахаха долбаеб тут нихуя нет")
-
+pass
