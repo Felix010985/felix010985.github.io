@@ -24,3 +24,4 @@ while True:
         print("лол тут нихуя нет")
     elif roflyatina == "settings":
         print("хахахахаха долбаеб тут нихуя нет")
+
