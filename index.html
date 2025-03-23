@@ -6,7 +6,7 @@
     <title>FelixProfi</title>
     <style>
         body {
-            background-color: #87CEFA; /* Голубой цвет фона */
+            background-color: #87CEFA; 
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
@@ -14,47 +14,80 @@
         }
 
         h1 {
-            margin-top: 20%;
-            font-size: 50px;
-            color: #333; /* Темный цвет для текста */
-            opacity: 1;
-            transition: margin-top 1s ease, opacity 2s ease;
+			margin-top: 20%;
+			font-size: 50px;
+			color: #333;
+			opacity: 1;
+			transition: margin-top 1s ease, opacity 2s ease;
+		}
+
+
+        .download-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            margin-top: 30px;
+            transition: opacity 2s ease-in-out;
         }
 
         .download-message {
             font-size: 24px;
             color: #333;
-            opacity: 0;
-            margin-top: 30px;
-            transition: opacity 2s ease-in-out;
         }
 
         a {
             color: #0066cc;
             text-decoration: none;
             font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+		.footer {
+            position: absolute;
+            bottom: 10px; 
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            width: 100%;
+        }
+
+        .footer a {
+            color: #0066cc;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <h1 id="title">FelixProfi</h1>
-    <div id="download-message" class="download-message">
-        Скачивание <strong>MazukiOS</strong> <br>
-        <a href="MazukiOS/main.exe" target="_blank">Скачать MazukiOS</a>
+    <div id="download-container" class="download-container">
+        <div class="download-message">
+            Скачивание <strong>MazukiOS</strong> <br>
+            <a href="MazukiOS/main.exe" target="_blank">Скачать MazukiOS</a>
+            <br>
+            Скачивание <strong>MazukiOS Nightly</strong> <br>
+            <a href="MazukiOS/nightly.exe" target="_blank">Скачать MazukiOS Nightly</a>
+        </div>
+    </div>
+	
+	<div class="footer">
+        &copy; 2025 FelixProfi. Все права защищены. <br>
+        Подписывайтесь на мой <a href="https://www.youtube.com/@FelixProfi0r1" target="_blank">YouTube канал</a>
     </div>
 
     <script>
-        // Поднимем заголовок вверх и покажем сообщение
         window.onload = function() {
             const title = document.getElementById("title");
-            const downloadMessage = document.getElementById("download-message");
-
-            // Заголовок поднимется
-            title.style.marginTop = "0";
-
-            // Появляется сообщение через 1.5 секунды
+            const downloadContainer = document.getElementById("download-container");
+            
+            title.style.marginTop = "10%";
+            
             setTimeout(() => {
-                downloadMessage.style.opacity = "1";
+                downloadContainer.style.opacity = "1";
             }, 1500);
         };
     </script>
