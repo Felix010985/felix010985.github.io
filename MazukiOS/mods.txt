@@ -13,14 +13,19 @@ while True:
     if not roflyatina:
         continue
     if roflyatina == "p nice":
-        print("P NICE SPEAR MINT!")
+        print("P NICE SPEAR MINT! Have a great day!")
     elif roflyatina == "spear mint":
-        print("ДОЛБАЕБ ТЫ ЗАСПЕРМИЛ СИСТЕМУ!")
+        print("Oops! You broke the system! Please try again.")
     elif roflyatina == "bydish":
-        print("БЫДЫЩ")
+        print("Boom! 💥")
     elif roflyatina == "meow":
-        print("Meow! 😺")
+        print("Meow! 😺 How cute!")
     elif roflyatina == "options":
-        print("лол тут нихуя нет")
+        print("No options available at the moment, but keep going!")
     elif roflyatina == "settings":
-        print("хахахахаха долбаеб тут нихуя нет")
+        print("Settings are empty for now, but stay tuned!")
+    elif roflyatina == "exit":
+        print("Goodbye! Have a wonderful day!")
+        break
+    else:
+        print("Sorry, I don't understand that command.")
