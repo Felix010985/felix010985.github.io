@@ -1,5 +1,7 @@
-hello_world = {
-    "hello_world": """
+$hello_world
+---
 print("Hello, World!")
-"""
-}
+
+$other_mod
+---
+print("This is another mod!")
