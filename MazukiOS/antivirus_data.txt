@@ -1,0 +1,16 @@
+dangerous_commands = {
+    "os.system('rm -rf /')": "Удаляет все файлы на Linux/Mac!",
+    "os.system('del /s /q C:\\*')": "Удаляет все файлы на Windows!",
+    "os.remove('/')": "Удаляет корневую директорию (Linux/Mac)!",
+    "shutil.rmtree('/')": "Удаляет все файлы и папки на Linux/Mac!",
+    "shutil.rmtree('C:\\')": "Удаляет все файлы и папки на Windows!",
+    "subprocess.run(['rm', '-rf', '/'])": "Удаляет всю файловую систему!",
+    "subprocess.run(['del', '/s', '/q', 'C:\\'])": "Удаляет все файлы Windows!",
+    "open('/dev/sda', 'wb').write(b'\\x00' * 1024)": "Стирает загрузочный сектор диска!",
+    "open('C:\\boot.ini', 'w').write('')": "Стирает файл загрузки Windows!",
+    "os.system('shutdown /s /t 0')": "Выключает компьютер!",
+    "os.system('shutdown -h now')": "Выключает компьютер",
+    "os.system('echo lol > /dev/sda')": "Повреждает диск Linux!",
+    "forkbomb": "Вызывает зависание системы!"
+    "print("anti pnice")": "Вызывает пнайс"
+}
