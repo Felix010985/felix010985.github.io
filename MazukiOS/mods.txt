@@ -5,6 +5,7 @@ print("Hello, World!")
 $other_mod
 ---
 print("This is another mod!")
+print("lol")
 
 $rofls
 ---
