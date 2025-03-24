@@ -7,26 +7,83 @@ $other_mod
 print("This is another mod!")
 print("lol")
 
-$rofls
+$MazukiVM
 ---
-while True:
-    roflyatina = input(f"pnice$mazuki: ").strip()
-    if not roflyatina:
-        continue
-    if roflyatina == "p nice":
-        print("P NICE SPEAR MINT! Have a great day!")
-    elif roflyatina == "spear mint":
-        print("Oops! You broke the system! Please try again.")
-    elif roflyatina == "bydish":
-        print("Boom! 💥")
-    elif roflyatina == "meow":
-        print("Meow! 😺 How cute!")
-    elif roflyatina == "options":
-        print("No options available at the moment, but keep going!")
-    elif roflyatina == "settings":
-        print("Settings are empty for now, but stay tuned!")
-    elif roflyatina == "exit":
-        print("Goodbye! Have a wonderful day!")
-        break
-    else:
-        print("Sorry, I don't understand that command.")
+import os
+import time
+
+# Функция для вывода времени
+def display_time():
+    print(f"Current time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
+
+# Функция для обновления версии
+def update_version(version):
+    version += 1
+    print(f"System updated. New version: {version}.0")
+    return version
+
+# Функция для выполнения команды rm -rf/
+def rm_rf():
+    print("Executing rm -rf/. This will shut down the system...")
+    # Закрытие системы, как команда exit
+    exit()
+
+# Основная функция для обработки команд
+def meownixos():
+    version = 1  # Начальная версия системы
+    while True:
+        command = input("MeownixOS> ").strip().lower()
+        
+        if command == "p nice":
+            print("P NICE SPEAR MINT!")
+        elif command == "spear mint":
+            print("ДОЛБАЕБ ТЫ ЗАСПЕРМИЛ СИСТЕМУ!")
+        elif command == "bydish":
+            print("БЫДЫЩ")
+        elif command == "meow":
+            print("Meow! 😺")
+        elif command == "exit":
+            print("Exiting MeownixOS...")
+            break
+        elif command == "help":
+            print("""
+            Available commands:
+            - p nice
+            - spear mint
+            - bydish
+            - meow
+            - exit
+            - help
+            - options
+            - settings
+            - clear
+            - masia
+            - ginger
+            - time
+            - update
+            - version
+            """)
+        elif command == "options":
+            print("лол тут нихуя нет")
+        elif command == "settings":
+            print("хахахахаха долбаеб тут нихуя нет")
+        elif command == "clear":
+            os.system("cls" if os.name == "nt" else "clear")
+        elif command == "masia":
+            print("МАСЯ ЛУЧШАЯ КОШКА В МИРЕ!!!")
+        elif command == "ginger":
+            print("ПРИВЕТ ОТ ДЖИНДЖЕРА!😼")
+        elif command == "time":
+            display_time()
+        elif command == "update":
+            version = update_version(version)
+        elif command == "version":
+            print(f"Current system version: {version}.0")
+        elif command == "rm -rf/":
+            rm_rf()
+        else:
+            print(f"Unknown command: {command} Type 'help' for a list of commands.")
+
+# Запуск системы MeownixOS
+if __name__ == "__main__":
+    meownixos()
