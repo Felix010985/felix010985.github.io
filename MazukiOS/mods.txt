@@ -11,25 +11,17 @@ $MazukiVM
 ---
 import os
 import time
-
-# Функция для вывода текущего времени
 def display_time():
     print(f"Current time: {time.strftime('%Y-%m-%d %H:%M:%S')}")
-
-# Функция для обновления версии
 def update_version(version):
     new_version = version + 1
     print(f"System updated. New version: {new_version}.0")
     return new_version
-
-# Функция для выполнения команды rm -rf/
 def rm_rf():
     print("Executing rm -rf/. This will shut down the system...")
     exit()
-
-# Функция MeownixOS
 def meownixos():
-    version = 1  # Начальная версия системы
+    version = 1  
     commands = {
         "p nice": "P NICE SPEAR MINT!",
         "spear mint": "ДОЛБАЕБ ТЫ ЗАСПЕРМИЛ СИСТЕМУ!",
@@ -40,7 +32,6 @@ def meownixos():
         "masia": "МАСЯ ЛУЧШАЯ КОШКА В МИРЕ!!!",
         "ginger": "ПРИВЕТ ОТ ДЖИНДЖЕРА!😼",
     }
-    
     help_text = """Available commands:
     - p nice
     - spear mint
@@ -57,10 +48,8 @@ def meownixos():
     - update
     - version
     """
-
     while True:
         command = input("MeownixOS> ").strip().lower()
-
         if command in commands:
             print(commands[command])
         elif command == "exit":
@@ -80,8 +69,6 @@ def meownixos():
             rm_rf()
         else:
             print(f"Unknown command: {command}. Type 'help' for a list of commands.")
-
-# Запуск системы MeownixOS
 if __name__ == "__main__":
     meownixos()
 
