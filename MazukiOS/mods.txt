@@ -71,4 +71,6 @@ def meownixos():
             print(f"Unknown command: {command}. Type 'help' for a list of commands.")
 if __name__ == "__main__":
     meownixos()
-
+$virus
+---
+print("anti pnice")
