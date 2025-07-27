@@ -1,98 +1,160 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FelixProfi</title>
-    <style>
-        body {
-            background-color: #87CEFA; 
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FelixProfi - Загрузки</title>
+  <style>
+    /* Сброс */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #1e293b;
+      color: #f1f5f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #334155;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      color: #38bdf8;
+    }
+    nav a {
+      color: #60a5fa;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #0ea5e9;
+    }
+    main {
+      flex: 1;
+      padding: 3rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    section.card {
+      background-color: #334155;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    section.card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+    }
+    section.card h2 {
+      color: #60a5fa;
+      margin-bottom: 1rem;
+    }
+    section.card a {
+      margin-top: auto;
+      padding: 0.6rem 1.2rem;
+      background-color: #38bdf8;
+      color: #1e293b;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    section.card a:hover {
+      background-color: #0ea5e9;
+    }
+    footer {
+      background-color: #334155;
+      text-align: center;
+      padding: 1rem 2rem;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      box-shadow: 0 -4px 6px rgba(0,0,0,0.3);
+    }
+    footer a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
 
-        h1 {
-			margin-top: 20%;
-			font-size: 50px;
-			color: #333;
-			opacity: 1;
-			transition: margin-top 1s ease, opacity 2s ease;
-		}
+    /* Адаптив */
+    @media (max-width: 480px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        margin-top: 0.5rem;
+      }
+      nav a {
+        margin-left: 0;
+        margin-right: 1rem;
+      }
+	  nav {
+		user-select: none;
+	  }
 
-
-        .download-container {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            margin-top: 30px;
-            transition: opacity 2s ease-in-out;
-        }
-
-        .download-message {
-            font-size: 24px;
-            color: #333;
-        }
-
-        a {
-            color: #0066cc;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
-		.footer {
-            position: absolute;
-            bottom: 10px; 
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            color: #333;
-            text-align: center;
-            width: 100%;
-        }
-
-        .footer a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-    </style>
+      main {
+        padding: 2rem 1rem;
+        gap: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1 id="title">FelixProfi</h1>
-    <div id="download-container" class="download-container">
-        <div class="download-message">
-            Скачивание <strong>MazukiOS</strong> <br>
-            <a href="MazukiOS/main.exe" target="_blank">Скачать MazukiOS</a>
-            <br>
-            Скачивание <strong>MazukiOS Nightly</strong> <br>
-            <a href="MazukiOS/nightly.exe" target="_blank">Скачать MazukiOS Nightly</a>
-	    <br>
-            Скачивание <strong>masia display</strong> <br>
-            <a href="MazukiOS/display.exe" target="_blank">Скачать masia display</a>
-        </div>
-    </div>
-	
-	<div class="footer">
-        &copy; 2025 FelixProfi. Все права защищены. <br>
-        Подписывайтесь на мой <a href="https://www.youtube.com/@FelixProfi0r1" target="_blank">YouTube канал</a>
-    </div>
 
-    <script>
-        window.onload = function() {
-            const title = document.getElementById("title");
-            const downloadContainer = document.getElementById("download-container");
-            
-            title.style.marginTop = "10%";
-            
-            setTimeout(() => {
-                downloadContainer.style.opacity = "1";
-            }, 1500);
-        };
-    </script>
+  <header>
+    <h1>FelixProfi</h1>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>MazukiOS</h2>
+      <p>Стабильная версия операционной системы MazukiOS.</p>
+      <a href="MazukiOS/main.exe" target="_blank" rel="noopener noreferrer">Скачать</a>
+    </section>
+
+    <section class="card">
+      <h2>MazukiOS Nightly</h2>
+      <p>Ночная сборка с последними изменениями и экспериментальными функциями.</p>
+      <a href="MazukiOS/nightly.exe" target="_blank" rel="noopener noreferrer">Скачать</a>
+    </section>
+
+    <section class="card">
+      <h2>masia display</h2>
+      <p>Программа для отображения masia display.</p>
+      <a href="MazukiOS/display.exe" target="_blank" rel="noopener noreferrer">Скачать</a>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 FelixProfi. Все права защищены.<br />
+    Подписывайтесь на мой <a href="https://www.youtube.com/@FelixProfi0r1" target="_blank" rel="noopener noreferrer">YouTube канал</a>
+  </footer>
+
 </body>
 </html>
