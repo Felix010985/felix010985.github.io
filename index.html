@@ -4,126 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FelixProfi - Загрузки</title>
-  <style>
-    /* Сброс */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background-color: #1e293b;
-      color: #f1f5f9;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      background-color: #334155;
-      padding: 1rem 2rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    header h1 {
-      font-size: 1.8rem;
-      color: #38bdf8;
-    }
-    nav a {
-      color: #60a5fa;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-    nav a:hover {
-      color: #0ea5e9;
-    }
-    main {
-      flex: 1;
-      padding: 3rem 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-    section.card {
-      background-color: #334155;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 10px 15px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
-    section.card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 15px 25px rgba(0,0,0,0.5);
-    }
-    section.card h2 {
-      color: #60a5fa;
-      margin-bottom: 1rem;
-    }
-    section.card a {
-      margin-top: auto;
-      padding: 0.6rem 1.2rem;
-      background-color: #38bdf8;
-      color: #1e293b;
-      text-decoration: none;
-      font-weight: 700;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-    }
-    section.card a:hover {
-      background-color: #0ea5e9;
-    }
-    footer {
-      background-color: #334155;
-      text-align: center;
-      padding: 1rem 2rem;
-      font-size: 0.9rem;
-      color: #94a3b8;
-      box-shadow: 0 -4px 6px rgba(0,0,0,0.3);
-    }
-    footer a {
-      color: #38bdf8;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    /* Адаптив */
-    @media (max-width: 480px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      nav {
-        margin-top: 0.5rem;
-      }
-      nav a {
-        margin-left: 0;
-        margin-right: 1rem;
-      }
-	  nav {
-		user-select: none;
-	  }
-
-      main {
-        padding: 2rem 1rem;
-        gap: 1.2rem;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -149,6 +30,13 @@
       <p>Программа для отображения masia display.</p>
       <a href="MazukiOS/display.exe" target="_blank" rel="noopener noreferrer">Скачать</a>
     </section>
+	
+	<section class="card">
+      <h2>MazukiOS C++</h2>
+      <p>Новые релизы MazukiOS на C++.</p>
+      <a href="https://mega.nz/folder/nF91FTLa#2TLN_mRfHgCOx6l4IewwQw" target="_blank" rel="noopener noreferrer">Просмотреть</a>
+    </section>
+  </main>
   </main>
 
   <footer>
