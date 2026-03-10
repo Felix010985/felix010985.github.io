@@ -62,6 +62,22 @@ main {
   gap: 2rem;
 }
 
+.social-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.social-links a {
+  display: flex;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.social-links a:hover {
+  opacity: 1;
+}
+
 section.card {
   background: linear-gradient(to bottom, #2b2b2b, #1a1a1a);
   border-radius: 12px;
