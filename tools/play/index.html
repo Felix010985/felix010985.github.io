@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<!-- Made by Claude AI and mostly for JS injection and real-time patching practice
+<-- Published by FelixProfi -->
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ ЭНЕРГИЯ — Кликер</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050a0f;
+    --panel: #0a1520;
+    --border: #0f2a40;
+    --accent: #00e5ff;
+    --accent2: #ff6b00;
+    --accent3: #7fff00;
+    --text: #c8e6f0;
+    --dim: #3a5a6a;
+    --glow: 0 0 20px #00e5ff55;
+    --glow2: 0 0 20px #ff6b0055;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, #001a2e 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, #0a0015 0%, transparent 50%);
+  }
+
+  /* SCANLINES */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,229,255,0.015) 2px,
+      rgba(0,229,255,0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--accent);
+    text-shadow: 0 0 30px var(--accent), 0 0 60px rgba(0,229,255,0.3);
+    letter-spacing: 0.15em;
+    text-align: center;
+  }
+
+  header {
+    padding: 20px 30px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(10,21,32,0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 30px;
+  }
+
+  .stat-box {
+    text-align: right;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .stat-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 1rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 320px 320px;
+    gap: 0;
+    min-height: calc(100vh - 80px);
+  }
+
+  /* CENTER: CLICK AREA */
+  .click-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    border-right: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+
+  .energy-display {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 0 40px var(--accent), 0 0 80px rgba(0,229,255,0.4);
+    margin-bottom: 8px;
+    transition: transform 0.05s;
+  }
+
+  .energy-display.pop {
+    transform: scale(1.08);
+  }
+
+  .per-second {
+    font-size: 0.75rem;
+    color: var(--dim);
+    margin-bottom: 50px;
+    letter-spacing: 0.1em;
+  }
+
+  .per-second span {
+    color: var(--accent3);
+  }
+
+  /* THE BUTTON */
+  .click-btn {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    background: radial-gradient(circle at 35% 35%, #0a2535, #020810);
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.08s, box-shadow 0.08s;
+    box-shadow:
+      0 0 40px rgba(0,229,255,0.2),
+      inset 0 0 40px rgba(0,229,255,0.05);
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .click-btn::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,229,255,0.2);
+  }
+
+  .click-btn::after {
+    content: '⚡';
+    font-size: 80px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
+    filter: drop-shadow(0 0 15px var(--accent));
+    transition: filter 0.1s;
+  }
+
+  .click-btn:hover {
+    box-shadow:
+      0 0 60px rgba(0,229,255,0.4),
+      inset 0 0 60px rgba(0,229,255,0.1);
+    transform: scale(1.03);
+  }
+
+  .click-btn:active {
+    transform: scale(0.94);
+    box-shadow:
+      0 0 80px rgba(0,229,255,0.7),
+      inset 0 0 80px rgba(0,229,255,0.2);
+  }
+
+  .click-btn:active::after {
+    filter: drop-shadow(0 0 30px #fff) brightness(1.5);
+  }
+
+  .click-power {
+    margin-top: 25px;
+    font-size: 0.7rem;
+    color: var(--dim);
+    letter-spacing: 0.08em;
+  }
+
+  .click-power span {
+    color: var(--accent2);
+    font-family: 'Orbitron', monospace;
+  }
+
+  /* FLOATING +N */
+  .float-num {
+    position: fixed;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent);
+    pointer-events: none;
+    z-index: 9998;
+    font-size: 1.2rem;
+    animation: floatUp 0.9s ease-out forwards;
+  }
+
+  @keyframes floatUp {
+    0%   { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(0.6); }
+  }
+
+  /* PANELS */
+  .panel {
+    padding: 0;
+    overflow-y: auto;
+    max-height: calc(100vh - 80px);
+  }
+
+  .panel::-webkit-scrollbar { width: 4px; }
+  .panel::-webkit-scrollbar-track { background: var(--bg); }
+  .panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .panel-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    color: var(--dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 20px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+  }
+
+  /* UPGRADES */
+  .upgrade-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(15,42,64,0.5);
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .upgrade-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.15s;
+  }
+
+  .upgrade-item:hover {
+    background: rgba(0,229,255,0.04);
+  }
+
+  .upgrade-item:hover::before {
+    transform: scaleY(1);
+  }
+
+  .upgrade-item.affordable {
+    cursor: pointer;
+  }
+
+  .upgrade-item.not-affordable {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .upgrade-item.not-affordable:hover {
+    background: transparent;
+  }
+
+  .upgrade-item.not-affordable::before {
+    display: none;
+  }
+
+  .upg-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+
+  .upg-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .upg-cost {
+    font-size: 0.65rem;
+    color: var(--accent2);
+    font-family: 'Orbitron', monospace;
+    white-space: nowrap;
+    margin-left: 8px;
+  }
+
+  .upg-desc {
+    font-size: 0.6rem;
+    color: var(--dim);
+    line-height: 1.5;
+  }
+
+  .upg-owned {
+    font-size: 0.55rem;
+    color: var(--accent3);
+    margin-top: 3px;
+  }
+
+  /* GENERATORS */
+  .gen-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(15,42,64,0.5);
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gen-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent3);
+    transform: scaleY(0);
+    transition: transform 0.15s;
+  }
+
+  .gen-item:hover { background: rgba(127,255,0,0.03); }
+  .gen-item:hover::before { transform: scaleY(1); }
+
+  .gen-item.not-affordable {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .gen-item.not-affordable:hover { background: transparent; }
+  .gen-item.not-affordable::before { display: none; }
+
+  .gen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3px;
+  }
+
+  .gen-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .gen-count {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: var(--accent3);
+    min-width: 30px;
+    text-align: right;
+  }
+
+  .gen-row2 {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .gen-ps {
+    font-size: 0.58rem;
+    color: var(--dim);
+  }
+
+  .gen-ps span { color: var(--accent3); }
+
+  .gen-cost {
+    font-size: 0.6rem;
+    color: var(--accent2);
+    font-family: 'Orbitron', monospace;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    margin-top: 5px;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--accent3);
+    border-radius: 1px;
+    transition: width 0.3s;
+    box-shadow: 0 0 8px var(--accent3);
+  }
+
+  /* MILESTONE */
+  .milestone-banner {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #0a1520, #0f2a3a);
+    border: 1px solid var(--accent);
+    padding: 14px 28px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-shadow: var(--glow);
+    box-shadow: var(--glow), 0 20px 40px rgba(0,0,0,0.5);
+    z-index: 9997;
+    opacity: 0;
+    pointer-events: none;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .milestone-banner.show {
+    animation: bannerAnim 2.5s ease forwards;
+  }
+
+  @keyframes bannerAnim {
+    0%   { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+    15%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+    75%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  }
+
+  /* PRESTIGE */
+  .prestige-section {
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+
+  .prestige-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    font-family: 'Orbitron', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .prestige-btn:hover:not(:disabled) {
+    background: rgba(255,107,0,0.1);
+    box-shadow: 0 0 20px rgba(255,107,0,0.3);
+  }
+
+  .prestige-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .prestige-info {
+    font-size: 0.55rem;
+    color: var(--dim);
+    text-align: center;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .click-zone {
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 30px 20px;
+    }
+    .panel {
+      max-height: 400px;
+    }
+    .header-stats {
+      gap: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ ЭНЕРГИЯ</h1>
+  <div class="header-stats">
+    <div class="stat-box">
+      <div class="stat-label">Всего собрано</div>
+      <div class="stat-value" id="total-stat">0</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Престиж</div>
+      <div class="stat-value" id="prestige-stat">×1.00</div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- LEFT: UPGRADES -->
+  <div class="panel" id="upgrades-panel">
+    <div class="panel-title">▸ Улучшения</div>
+    <div id="upgrades-list"></div>
+    <div class="prestige-section">
+      <button class="prestige-btn" id="prestige-btn" disabled onclick="prestige()">
+        ⚠ ПЕРЕЗАПУСК (Престиж)
+      </button>
+      <div class="prestige-info" id="prestige-info">Нужно 1 000 000 ⚡ для престижа<br>+10% к множителю навсегда</div>
+    </div>
+  </div>
+
+  <!-- CENTER: CLICK -->
+  <div class="click-zone">
+    <div class="energy-display" id="energy">0</div>
+    <div class="per-second">+<span id="eps">0</span> ⚡/сек</div>
+    <button class="click-btn" id="click-btn" onclick="handleClick(event)"></button>
+    <div class="click-power">Клик: <span id="click-power-display">1</span> ⚡</div>
+  </div>
+
+  <!-- RIGHT: GENERATORS -->
+  <div class="panel" id="generators-panel">
+    <div class="panel-title">▸ Генераторы</div>
+    <div id="generators-list"></div>
+  </div>
+
+</div>
+
+<div class="milestone-banner" id="milestone-banner"></div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  energy: 0,
+  totalEarned: 0,
+  clickPower: 1,
+  prestigeLevel: 0,
+  prestigeMultiplier: 1.0,
+  generators: {},   // id -> count
+  upgrades: {},     // id -> purchased bool
+};
+
+// ============================================================
+// DATA
+// ============================================================
+const GENERATORS = [
+  { id: 'capacitor',  name: 'Конденсатор',    baseCost: 15,    basePS: 0.1,  emoji: '🔋' },
+  { id: 'solar',      name: 'Солнечная панель',baseCost: 100,   basePS: 0.5,  emoji: '☀️' },
+  { id: 'windmill',   name: 'Ветрогенератор',  baseCost: 1100,  basePS: 4,    emoji: '🌀' },
+  { id: 'reactor',    name: 'Реактор',         baseCost: 12000, basePS: 30,   emoji: '⚛️' },
+  { id: 'plasma',     name: 'Плазменный канал',baseCost: 130000,basePS: 200,  emoji: '🔵' },
+  { id: 'dyson',      name: 'Сфера Дайсона',   baseCost: 1400000,basePS:1500, emoji: '🌟' },
+  { id: 'quantum',    name: 'Квантовый движок', baseCost: 20000000,basePS:10000,emoji: '🌌' },
+];
+
+const UPGRADES = [
+  // Click upgrades
+  { id: 'click2',   name: 'Острые пальцы',    cost: 50,       effect: 'click', val: 1,     desc: 'Клик +1 ⚡', req: () => true },
+  { id: 'click3',   name: 'Удар молнии',       cost: 500,      effect: 'click', val: 5,     desc: 'Клик +5 ⚡', req: () => state.totalEarned >= 200 },
+  { id: 'click4',   name: 'Разряд',            cost: 5000,     effect: 'click', val: 20,    desc: 'Клик +20 ⚡', req: () => state.totalEarned >= 2000 },
+  { id: 'click5',   name: 'Гиперудар',         cost: 50000,    effect: 'click', val: 100,   desc: 'Клик +100 ⚡', req: () => state.totalEarned >= 20000 },
+  { id: 'click6',   name: 'Аннигиляция',       cost: 500000,   effect: 'click', val: 500,   desc: 'Клик +500 ⚡', req: () => state.totalEarned >= 200000 },
+  // Generator multipliers
+  { id: 'cap2x',    name: 'Улучш. конденсатор', cost: 200,     effect: 'gen',  genId: 'capacitor', mult: 2,  desc: '×2 к конденсаторам', req: () => (state.generators['capacitor']||0) >= 5 },
+  { id: 'cap5x',    name: 'Нановолокно',        cost: 2000,    effect: 'gen',  genId: 'capacitor', mult: 3,  desc: '×3 к конденсаторам', req: () => (state.generators['capacitor']||0) >= 15 },
+  { id: 'sol2x',    name: 'Антирефлекс',        cost: 1500,    effect: 'gen',  genId: 'solar',     mult: 2,  desc: '×2 к солнечным', req: () => (state.generators['solar']||0) >= 5 },
+  { id: 'sol5x',    name: 'Концентраторы',       cost: 15000,   effect: 'gen',  genId: 'solar',     mult: 3,  desc: '×3 к солнечным', req: () => (state.generators['solar']||0) >= 15 },
+  { id: 'wind2x',   name: 'Аэродинамика',        cost: 10000,   effect: 'gen',  genId: 'windmill',  mult: 2,  desc: '×2 к ветрогенераторам', req: () => (state.generators['windmill']||0) >= 5 },
+  { id: 'react2x',  name: 'Обогащение',          cost: 100000,  effect: 'gen',  genId: 'reactor',   mult: 2,  desc: '×2 к реакторам', req: () => (state.generators['reactor']||0) >= 5 },
+  { id: 'plas2x',   name: 'Магнитное поле',      cost: 1000000, effect: 'gen',  genId: 'plasma',    mult: 2,  desc: '×2 к плазменным', req: () => (state.generators['plasma']||0) >= 5 },
+  // Global multipliers
+  { id: 'eff1',     name: 'Оптимизация сети',    cost: 5000,    effect: 'all',  mult: 1.1,  desc: '+10% ко всему производству', req: () => state.totalEarned >= 3000 },
+  { id: 'eff2',     name: 'Суперпроводники',      cost: 50000,   effect: 'all',  mult: 1.2,  desc: '+20% ко всему производству', req: () => state.totalEarned >= 30000 },
+  { id: 'eff3',     name: 'Нулевое сопротивление',cost: 500000,  effect: 'all',  mult: 1.25, desc: '+25% ко всему производству', req: () => state.totalEarned >= 300000 },
+];
+
+const MILESTONES = [
+  { val: 100,       msg: '⚡ 100 энергии!' },
+  { val: 1000,      msg: '⚡ 1 000 — первая тысяча!' },
+  { val: 10000,     msg: '⚡ 10 000 — уже серьёзно!' },
+  { val: 100000,    msg: '⚡ 100 000 — мощь!' },
+  { val: 1000000,   msg: '⚡ 1 000 000 — МЕГАВАТТ!' },
+  { val: 10000000,  msg: '⚡ 10 000 000 — ГИГАВАТТ!' },
+  { val: 100000000, msg: '⚡ 100 000 000 — ЛЕГЕНДА!' },
+];
+let shownMilestones = new Set();
+
+// ============================================================
+// CALC
+// ============================================================
+function getClickPower() {
+  let base = 1;
+  UPGRADES.forEach(u => {
+    if (state.upgrades[u.id] && u.effect === 'click') base += u.val;
+  });
+  // small bonus per generator owned
+  let genTotal = Object.values(state.generators).reduce((a,b) => a+b, 0);
+  base += Math.floor(genTotal * 0.1);
+  return Math.floor(base * state.prestigeMultiplier);
+}
+
+function getGenMultiplier(genId) {
+  let mult = 1;
+  UPGRADES.forEach(u => {
+    if (state.upgrades[u.id] && u.effect === 'gen' && u.genId === genId) mult *= u.mult;
+  });
+  UPGRADES.forEach(u => {
+    if (state.upgrades[u.id] && u.effect === 'all') mult *= u.mult;
+  });
+  return mult * state.prestigeMultiplier;
+}
+
+function getGenPS(gen) {
+  const count = state.generators[gen.id] || 0;
+  return count * gen.basePS * getGenMultiplier(gen.id);
+}
+
+function getTotalPS() {
+  return GENERATORS.reduce((sum, g) => sum + getGenPS(g), 0);
+}
+
+function getGenCost(gen) {
+  const count = state.generators[gen.id] || 0;
+  return Math.floor(gen.baseCost * Math.pow(1.15, count));
+}
+
+// ============================================================
+// TICK
+// ============================================================
+let lastTick = performance.now();
+function tick(now) {
+  const dt = Math.min((now - lastTick) / 1000, 0.5);
+  lastTick = now;
+  const earned = getTotalPS() * dt;
+  state.energy += earned;
+  state.totalEarned += earned;
+  checkMilestones();
+  updateDisplay();
+  requestAnimationFrame(tick);
+}
+
+// ============================================================
+// CLICK
+// ============================================================
+function handleClick(e) {
+  const power = getClickPower();
+  state.energy += power;
+  state.totalEarned += power;
+
+  // Animate energy display
+  const el = document.getElementById('energy');
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+  setTimeout(() => el.classList.remove('pop'), 100);
+
+  // Floating number
+  const span = document.createElement('div');
+  span.className = 'float-num';
+  span.textContent = '+' + formatNum(power);
+  span.style.left = (e.clientX - 20) + 'px';
+  span.style.top = (e.clientY - 10) + 'px';
+  document.body.appendChild(span);
+  setTimeout(() => span.remove(), 950);
+
+  checkMilestones();
+  updateDisplay();
+}
+
+// ============================================================
+// BUY
+// ============================================================
+function buyGenerator(id) {
+  const gen = GENERATORS.find(g => g.id === id);
+  const cost = getGenCost(gen);
+  if (state.energy < cost) return;
+  state.energy -= cost;
+  state.generators[id] = (state.generators[id] || 0) + 1;
+  renderGenerators();
+  renderUpgrades();
+  updateDisplay();
+}
+
+function buyUpgrade(id) {
+  const upg = UPGRADES.find(u => u.id === id);
+  if (state.upgrades[id] || state.energy < upg.cost) return;
+  state.energy -= upg.cost;
+  state.upgrades[id] = true;
+  renderUpgrades();
+  updateDisplay();
+}
+
+// ============================================================
+// PRESTIGE
+// ============================================================
+function prestige() {
+  if (state.totalEarned < 1000000) return;
+  state.prestigeLevel++;
+  state.prestigeMultiplier = 1 + state.prestigeLevel * 0.10;
+  state.energy = 0;
+  state.totalEarned = 0;
+  state.generators = {};
+  state.upgrades = {};
+  shownMilestones.clear();
+  renderAll();
+  showMilestone(`🌟 ПРЕСТИЖ ${state.prestigeLevel}! Множитель ×${state.prestigeMultiplier.toFixed(2)}`);
+}
+
+// ============================================================
+// DISPLAY
+// ============================================================
+function formatNum(n) {
+  if (n >= 1e18) return (n/1e18).toFixed(2) + 'E';
+  if (n >= 1e15) return (n/1e15).toFixed(2) + 'П';
+  if (n >= 1e12) return (n/1e12).toFixed(2) + 'Т';
+  if (n >= 1e9)  return (n/1e9).toFixed(2) + 'М';
+  if (n >= 1e6)  return (n/1e6).toFixed(2) + 'М';
+  if (n >= 1e3)  return (n/1e3).toFixed(1) + 'К';
+  return Math.floor(n).toString();
+}
+
+function formatBig(n) {
+  if (n >= 1e18) return (n/1e18).toFixed(3) + ' Е';
+  if (n >= 1e15) return (n/1e15).toFixed(3) + ' П';
+  if (n >= 1e12) return (n/1e12).toFixed(3) + ' Т';
+  if (n >= 1e9)  return (n/1e9).toFixed(3) + ' Г';
+  if (n >= 1e6)  return (n/1e6).toFixed(3) + ' М';
+  if (n >= 1e3)  return (n/1e3).toFixed(2) + ' К';
+  return Math.floor(n).toString();
+}
+
+function updateDisplay() {
+  const energy = Math.floor(state.energy);
+  document.getElementById('energy').textContent = formatBig(energy);
+  document.getElementById('eps').textContent = formatNum(getTotalPS());
+  document.getElementById('total-stat').textContent = formatBig(Math.floor(state.totalEarned));
+  document.getElementById('prestige-stat').textContent = '×' + state.prestigeMultiplier.toFixed(2);
+  document.getElementById('click-power-display').textContent = formatNum(getClickPower());
+
+  // Prestige button
+  const pb = document.getElementById('prestige-btn');
+  pb.disabled = state.totalEarned < 1000000;
+
+  // Update affordability classes
+  document.querySelectorAll('[data-gen-id]').forEach(el => {
+    const gen = GENERATORS.find(g => g.id === el.dataset.genId);
+    const cost = getGenCost(gen);
+    const count = state.generators[gen.id] || 0;
+    el.querySelector('.gen-cost').textContent = formatNum(cost) + ' ⚡';
+    el.querySelector('.gen-count').textContent = count;
+    const ps = getGenPS(gen);
+    el.querySelector('.gen-ps').innerHTML = ps > 0 ? `+<span>${formatNum(ps)}</span>/сек` : `${formatNum(gen.basePS * getGenMultiplier(gen.id))}/шт`;
+    const pct = Math.min(100, (state.energy / cost) * 100);
+    el.querySelector('.progress-bar').style.width = pct + '%';
+    el.className = 'gen-item ' + (state.energy >= cost ? 'affordable' : 'not-affordable');
+  });
+
+  document.querySelectorAll('[data-upg-id]').forEach(el => {
+    const upg = UPGRADES.find(u => u.id === el.dataset.upgId);
+    if (!state.upgrades[upg.id] && upg.req()) {
+      el.className = 'upgrade-item ' + (state.energy >= upg.cost ? 'affordable' : 'not-affordable');
+    }
+  });
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderGenerators() {
+  const container = document.getElementById('generators-list');
+  container.innerHTML = '';
+  GENERATORS.forEach(gen => {
+    const count = state.generators[gen.id] || 0;
+    const cost = getGenCost(gen);
+    const ps = getGenPS(gen);
+    const affordable = state.energy >= cost;
+    const pct = Math.min(100, (state.energy / cost) * 100);
+    const div = document.createElement('div');
+    div.className = 'gen-item ' + (affordable ? 'affordable' : 'not-affordable');
+    div.dataset.genId = gen.id;
+    div.innerHTML = `
+      <div class="gen-header">
+        <div class="gen-name">${gen.emoji} ${gen.name}</div>
+        <div class="gen-count">${count}</div>
+      </div>
+      <div class="gen-row2">
+        <div class="gen-ps">${ps > 0 ? `+<span>${formatNum(ps)}</span>/сек` : `${formatNum(gen.basePS)}/шт`}</div>
+        <div class="gen-cost">${formatNum(cost)} ⚡</div>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
+    `;
+    div.onclick = () => buyGenerator(gen.id);
+    container.appendChild(div);
+  });
+}
+
+function renderUpgrades() {
+  const container = document.getElementById('upgrades-list');
+  container.innerHTML = '';
+  UPGRADES.forEach(upg => {
+    if (state.upgrades[upg.id]) return; // hide purchased
+    if (!upg.req()) return; // hide locked
+    const affordable = state.energy >= upg.cost;
+    const div = document.createElement('div');
+    div.className = 'upgrade-item ' + (affordable ? 'affordable' : 'not-affordable');
+    div.dataset.upgId = upg.id;
+    div.innerHTML = `
+      <div class="upg-header">
+        <div class="upg-name">${upg.name}</div>
+        <div class="upg-cost">${formatNum(upg.cost)} ⚡</div>
+      </div>
+      <div class="upg-desc">${upg.desc}</div>
+    `;
+    div.onclick = () => buyUpgrade(upg.id);
+    container.appendChild(div);
+  });
+
+  // Show purchased count
+  const purchased = Object.keys(state.upgrades).length;
+  if (purchased > 0) {
+    const note = document.createElement('div');
+    note.style.cssText = 'padding:10px 20px; font-size:0.58rem; color:#3a5a6a;';
+    note.textContent = `✓ Куплено улучшений: ${purchased}`;
+    container.appendChild(note);
+  }
+}
+
+function renderAll() {
+  renderGenerators();
+  renderUpgrades();
+  updateDisplay();
+}
+
+// ============================================================
+// MILESTONES
+// ============================================================
+function checkMilestones() {
+  MILESTONES.forEach(m => {
+    if (!shownMilestones.has(m.val) && state.totalEarned >= m.val) {
+      shownMilestones.add(m.val);
+      showMilestone(m.msg);
+    }
+  });
+}
+
+function showMilestone(msg) {
+  const el = document.getElementById('milestone-banner');
+  el.textContent = msg;
+  el.classList.remove('show');
+  void el.offsetWidth;
+  el.classList.add('show');
+}
+
+// ============================================================
+// SAVE / LOAD
+// ============================================================
+function saveGame() {
+  localStorage.setItem('energyClicker_save', JSON.stringify(state));
+  localStorage.setItem('energyClicker_milestones', JSON.stringify([...shownMilestones]));
+}
+
+function loadGame() {
+  try {
+    const s = localStorage.getItem('energyClicker_save');
+    if (s) {
+      state = Object.assign(state, JSON.parse(s));
+    }
+    const m = localStorage.getItem('energyClicker_milestones');
+    if (m) {
+      shownMilestones = new Set(JSON.parse(m));
+    }
+  } catch(e) {}
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadGame();
+renderAll();
+requestAnimationFrame(tick);
+setInterval(saveGame, 5000); // autosave every 5s
+</script>
+</body>
+</html>

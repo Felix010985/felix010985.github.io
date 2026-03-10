@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>JSE</title>
+    <style>
+        body { margin: 0; display: flex; height: 100vh; background: #2d2d2d; color: white; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        #editor-container { flex: 1; border-right: 2px solid #444; }
+        #output-container { width: 400px; display: flex; flex-direction: column; background: #1e1e1e; }
+        #console { flex: 1; padding: 10px; font-family: monospace; overflow-y: auto; color: #9cdcfe; font-size: 14px; border-top: 1px solid #444; }
+        .controls { padding: 10px; background: #333; display: flex; gap: 10px; }
+        button { background: #4CAF50; border: none; color: white; padding: 8px 20px; cursor: pointer; border-radius: 4px; }
+        button:hover { background: #45a049; }
+        .log-item { border-bottom: 1px solid #333; padding: 4px 0; }
+    </style>
+</head>
+<body>
+
+<div id="editor-container"></div>
+
+<div id="output-container">
+    <div class="controls">
+        <button onclick="executeCode()">Запустить (Ctrl+Enter)</button>
+        <button onclick="clearConsole()" style="background:#666">Очистить</button>
+    </div>
+    <div id="console">/* Результаты появятся здесь */</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ace-builds@1.43.6/src-min-noconflict/ace.min.js"></script>
+<script>
+    const editor = ace.edit("editor-container");
+	editor.setTheme("ace/theme/monokai");
+	editor.session.setMode("ace/mode/javascript");
+	editor.setOptions({
+		fontSize: "14pt",
+		showPrintMargin: false,
+	});
+
+	const consoleDiv = document.getElementById('console');
+
+	function logToScreen(...args) {
+		const item = document.createElement('div');
+		item.className = 'log-item';
+		item.textContent = args.map(arg => 
+			typeof arg === 'object' ? JSON.stringify(arg) : arg
+		).join(' ');
+		
+		consoleDiv.appendChild(item);
+		consoleDiv.scrollTop = consoleDiv.scrollHeight;
+	}
+
+	function clearConsole() { consoleDiv.innerHTML = ''; }
+
+	function executeCode() {
+		const code = editor.getValue();
+		
+		const customConsole = {
+			log: (...args) => logToScreen(...args),
+			error: (...args) => logToScreen('Environment Error: ' + args),
+			warn: (...args) => logToScreen('⚠️ ' + args)
+		};
+
+		try {
+			const run = new Function('console', 'document', 'window', `
+				try {
+					${code}
+				} catch (e) {
+					console.error(e.message);
+				}
+			`);
+
+			run(customConsole, document, window);
+			
+		} catch (err) {
+			logToScreen('ОШИБКА СИНТАКСИСА: ' + err.message);
+		}
+	}
+
+	document.addEventListener('keydown', e => {
+		if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+			e.preventDefault();
+			executeCode();
+		}
+	});
+</script>
+</body>
+</html>

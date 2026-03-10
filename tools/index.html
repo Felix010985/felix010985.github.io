@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FelixProfi/tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
+    padding: 1rem 2rem;
+    border-bottom: 2px solid #444;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    border-radius: 0 0 12px 12px;
+  }
+
+  header h1 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.05em;
+  }
+
+  header p {
+    font-size: 0.8rem;
+    color: #777;
+    margin-top: 2px;
+  }
+
+  main {
+    flex: 1;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .file-card {
+    background: linear-gradient(to bottom, #2b2b2b, #1a1a1a);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .file-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  }
+
+  .file-info { flex: 1; }
+
+  .file-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .file-desc {
+    font-size: 0.8rem;
+    color: #999;
+    margin-top: 3px;
+  }
+
+  .dl-btn {
+	display: inline-flex;   
+	align-items: center;
+	justify-content: center;
+    border: none;
+    cursor: pointer;
+	height: 38px;
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #f0f0f0;
+    background-color: #444;
+    background-image: linear-gradient(145deg, #383636 0%, #2c2a2a 50%, #212020 100%);
+    border-radius: 8px;
+    box-shadow: 0px 1px 4px -2px #111;
+    text-shadow: 0px -1px #111;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+
+  .dl-btn::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: calc(100% - 4px);
+    height: 50%;
+    background: linear-gradient(rgba(255,255,255,0.35), rgba(255,255,255,0.08));
+    pointer-events: none;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .dl-btn:hover {
+    background-image: linear-gradient(145deg, #4f4c4c 0%, #3b3838 50%, #2c2a2a 100%);
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.5);
+  }
+
+  footer {
+    background: linear-gradient(to top, #2c2c2c, #1a1a1a);
+    text-align: center;
+    padding: 1rem 2rem;
+    font-size: 0.8rem;
+    color: #555;
+    border-top: 1px solid #333;
+  }
+
+  @media (max-width: 480px) {
+    .file-card { flex-direction: column; align-items: flex-start; }
+    .dl-btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>tools</h1>
+</header>
+
+<main>
+
+  <div class="file-card">
+    <div class="file-info">
+      <div class="file-name">Инжекторы</div>
+      <div class="file-desc">Сборник инжекторов</div>
+    </div>
+    <a class="dl-btn" href="https://felix010985.github.io/tools/bookmarks" go>перейти</a>
+  </div>
+
+  <div class="file-card">
+    <div class="file-info">
+      <div class="file-name">Mod menu</div>
+      <div class="file-desc">Настраиваемое меню для модов на сайте</div>
+    </div>
+    <a class="dl-btn" href="https://felix010985.github.io/tools/mod" go>перейти</a>
+  </div>
+  
+  <div class="file-card">
+    <div class="file-info">
+      <div class="file-name">Кликер игра</div>
+      <div class="file-desc">Игра для практики JS инъекций и читов</div>
+    </div>
+    <a class="dl-btn" href="https://felix010985.github.io/tools/play" go>перейти</a>
+  </div>
+  
+  <div class="file-card">
+    <div class="file-info">
+      <div class="file-name">JSE</div>
+      <div class="file-desc">Среда для разработки на JS без DevTools</div>
+    </div>
+    <a class="dl-btn" href="https://felix010985.github.io/tools/jse" go>перейти</a>
+  </div>
+
+</main>
+
+<footer>FelixProfi</footer>
+
+</body>
+</html>
